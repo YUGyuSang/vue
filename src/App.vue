@@ -40,6 +40,22 @@
   <button @click="changeMessage()">{{message}}</button>
   {{watchMessage}}
 
+  <h1>Props Emits</h1>
+  <div>
+    <!-- <ChildComponent v-bind:sendProps1="title" v-bind:sendProps2="createAt" :sendProps3="obj" /> -->
+    <ChildComponent @send-event="parentEvent" :sendProps1="title" :sendProps2="createAt" :sendProps3="obj"/>
+  </div>
+
+  <h1>v-model</h1>
+  <div>
+    <input type="text" v-model="inputValue1">
+    <span>즉각적으로 변함</span>
+    <input type="text" :value="inputValue2" @input="inputValue2 = $event.target.value" />
+  </div>
+  <div>
+    {{inputValue1}}
+    {{inputValue2}}
+  </div>
 
   <!-- <div>
     <h4>{{products[0]}}</h4>
@@ -61,9 +77,24 @@
 <script>
 
 import data from './assets/oneroom.js'
+import ChildComponent from './components/ChildComponent.vue'
+
+// interface obj{
+//   id:number,
+//   name:string
+// }
+
+// const title = ref<string>('부모컴포넌트에서 선언된 데이터입니다.')
+// const createAt = ref<number>(2024)
+// const Object = reactive<obj>({
+//   id: 2024,
+//   name: 'yu'
+// })
 
 export default {
-  name: 'App',
+  components:{
+    ChildComponent,
+  },
   data(){
     return {
       oneroom : data,
@@ -77,6 +108,14 @@ export default {
       text:"coumputed 테스트 데이터 문구입니다.",
       message:'안녕하세요, vue.js watch 기능입니다.',
       watchMessage:'',
+      title:'부모컴포넌트에서 선언된 데이터입니다.',
+      createAt: 2024,
+      obj:{
+        id:2024,
+        name:'yu'
+      },
+      inputValue1: '',
+      inputValue2: '',
     }
   },
   // methods 부분에 선언된 함수와 동일한 로직일 때
@@ -118,7 +157,10 @@ export default {
     changeMessage() {
       console.log('M 함수 호출!');
       this.message = '변경된 message 데이터입니다.'
-    } 
+    },
+    parentEvent(e){
+      console.log(e);
+    }
   },
 }
 </script>
