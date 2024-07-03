@@ -51,6 +51,9 @@
     <input type="text" v-model="inputValue1">
     <span>즉각적으로 변함</span>
     <input type="text" :value="inputValue2" @input="inputValue2 = $event.target.value" />
+    <input type="checkbox" v-model="checkbox">
+    <div v-if="checkbox == true">hi</div>
+    <div v-else>hello</div>
   </div>
   <div>
     {{inputValue1}}
@@ -116,6 +119,7 @@ export default {
       },
       inputValue1: '',
       inputValue2: '',
+      checkbox: false,
     }
   },
   // methods 부분에 선언된 함수와 동일한 로직일 때
